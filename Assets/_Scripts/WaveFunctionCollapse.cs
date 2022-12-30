@@ -6,6 +6,8 @@ using UnityEngine;
 public class WaveFunctionCollapse : MonoBehaviour
 {
     public static WaveFunctionCollapse Instance { get; private set; }
+
+    [SerializeField] public map Map;
     private void Awake() 
     { 
         // If there is an instance, and it's not me, delete myself.
@@ -36,10 +38,29 @@ public class WaveFunctionCollapse : MonoBehaviour
             if (targetSide == GetSide(shape,dirneighbors))
             {
                 matchingShapes.Add(shape);
-                Debug.Log(shape.objectShape[0]+","+shape.objectShape[1]+","+shape.objectShape[2]+","+shape.objectShape[3]);
             }
         }
+        Debug.Log(matchingShapes.Count);
+        return matchingShapes;
+    }
+    
+    public static List<Shapes> ReturnMatchingListShapes(List<Shapes> targetShapes, direction dir, List<Shapes> allShapes)
+    {
+        List<Shapes> matchingShapes = new List<Shapes>();
 
+        foreach (var shape in targetShapes)
+        {
+            List<Shapes> res = ReturnMatchingShapes(shape, dir, allShapes);
+            foreach (var resShape in res)
+            {
+                if (!matchingShapes.Contains(resShape))
+                {
+                    matchingShapes.Add(resShape);
+                }
+            }
+        }
+        
+        Debug.Log(matchingShapes.Count);
         return matchingShapes;
     }
 
@@ -54,7 +75,7 @@ public class WaveFunctionCollapse : MonoBehaviour
             case direction.East:
                 return new Vector2(targetShape.objectShape[1], targetShape.objectShape[2]);
             case direction.South:
-                return new Vector2(targetShape.objectShape[2], targetShape.objectShape[3]);
+                return new Vector2(targetShape.objectShape[3], targetShape.objectShape[2]);
             default:
                 throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
         }

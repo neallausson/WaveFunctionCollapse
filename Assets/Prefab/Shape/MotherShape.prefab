@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1098092232423526447}
   - component: {fileID: 1098092232423526446}
+  - component: {fileID: 3781705787272267776}
   m_Layer: 0
   m_Name: MotherShape
   m_TagString: Untagged
@@ -69,6 +70,23 @@ MonoBehaviour:
   - {fileID: 4011777085121594750, guid: 88e591fc8cf5eb34e979a359514448af, type: 3}
   - {fileID: 8156528508487249725, guid: ee49308a9d02daa4f8ae64ac82b7c4e4, type: 3}
   objectShape: 00000000000000000000000000000000
+  PossibleNeighborsW: []
+  PossibleNeighborsN: []
+  PossibleNeighborsE: []
+  PossibleNeighborsS: []
+--- !u!65 &3781705787272267776
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098092232423526445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 2}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &1098092231370256641
 PrefabInstance:
   m_ObjectHideFlags: 0
