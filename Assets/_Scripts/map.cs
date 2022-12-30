@@ -33,11 +33,29 @@ public class map : MonoBehaviour
         }
     }
 
+    public void MakeAChoice()
+    {
+        int selectedPos = Random.Range(0, ListTiles.Count);
+        for (int i = 0; i < ListTiles.Count; i++)
+        {
+            if (ListTiles[selectedPos].PossiblesShapes.Count == 1)
+            {
+                selectedPos = i;
+            }
+            else if (ListTiles[i].PossiblesShapes.Count < ListTiles[selectedPos].PossiblesShapes.Count && ListTiles[i].PossiblesShapes.Count!=1)
+            {
+                selectedPos = i;
+            }
+        }
+        Debug.Log("Less entropy :" + ListTiles[selectedPos].PossiblesShapes.Count);
+        ListTiles[selectedPos].SelectShape(new List<Shapes>() {ListTiles[selectedPos].PossiblesShapes[Random.Range(0,ListTiles[selectedPos].PossiblesShapes.Count)]});
+    }
+
     public IEnumerator Propagate(Tile tile)
     {
         int pos = GetPos(tile);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.2f);
         //West
         int westPos = pos - Number_rows;
         if (westPos>=0)
