@@ -32,7 +32,7 @@ public class map : MonoBehaviour
             }
         }
     }
-
+    
     public void MakeAChoice()
     {
         int selectedPos = Random.Range(0, ListTiles.Count);
@@ -51,11 +51,48 @@ public class map : MonoBehaviour
         ListTiles[selectedPos].SelectShape(new List<Shapes>() {ListTiles[selectedPos].PossiblesShapes[Random.Range(0,ListTiles[selectedPos].PossiblesShapes.Count)]});
     }
 
-    public IEnumerator Propagate(Tile tile)
+    public int MakeAChoiceReturnEntropy()
+    {
+        int selectedPos = Random.Range(0, ListTiles.Count);
+        for (int i = 0; i < ListTiles.Count; i++)
+        {
+            if (ListTiles[selectedPos].PossiblesShapes.Count == 1)
+            {
+                selectedPos = i;
+            }
+            else if (ListTiles[i].PossiblesShapes.Count < ListTiles[selectedPos].PossiblesShapes.Count && ListTiles[i].PossiblesShapes.Count!=1)
+            {
+                selectedPos = i;
+            }
+        }
+
+        int minEntropy = ListTiles[selectedPos].PossiblesShapes.Count;
+        Debug.Log("Less entropy :" + minEntropy);
+        ListTiles[selectedPos].SelectShape(new List<Shapes>() {ListTiles[selectedPos].PossiblesShapes[Random.Range(0,ListTiles[selectedPos].PossiblesShapes.Count)]});
+        return minEntropy;
+    }
+
+    public void Resolve()
+    {
+        StartCoroutine(ResolveDelay());
+    }
+
+    public IEnumerator ResolveDelay()
+    {
+        int minEntropy = MakeAChoiceReturnEntropy();
+        Debug.Log("MinEntropy : "+minEntropy);
+        while (minEntropy != 1)
+        {
+            yield return new WaitForSeconds(0f);
+            minEntropy = MakeAChoiceReturnEntropy();
+            Debug.Log("MinEntropy : "+minEntropy);
+        }
+    }
+
+    public void Propagate(Tile tile)
     {
         int pos = GetPos(tile);
-
-        yield return new WaitForSeconds(0.2f);
+        
         //West
         int westPos = pos - Number_rows;
         if (westPos>=0)

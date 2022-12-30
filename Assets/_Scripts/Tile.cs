@@ -54,7 +54,7 @@ public class Tile : MonoBehaviour
         if (oldCount != PossiblesShapes.Count)
         {
             UpdateTileVisual();
-            StartCoroutine(WaveFunctionCollapse.Instance.Map.Propagate(this));
+            WaveFunctionCollapse.Instance.Map.Propagate(this);
         }
         
     }
