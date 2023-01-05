@@ -28,7 +28,7 @@ public class WaveFunctionCollapse : MonoBehaviour
     {
         List<Shapes> matchingShapes = new List<Shapes>();
 
-        Vector2 targetSide = GetSide(targetShape, dir);
+        Vector3 targetSide = GetSide(targetShape, dir);
 
         direction dirneighbors = (direction)(((int) dir + 2) % 4);
 
@@ -64,20 +64,39 @@ public class WaveFunctionCollapse : MonoBehaviour
         return matchingShapes;
     }
 
-    public static Vector2 GetSide(Shapes targetShape, direction dir)
+    public static Vector3 GetSide(Shapes targetShape, direction dir)
     {
-        switch (dir)
+        if (targetShape.objectShape.Length == 4)
         {
-            case direction.West:
-                return new Vector2(targetShape.objectShape[0], targetShape.objectShape[3]);
-            case direction.North:
-                return new Vector2(targetShape.objectShape[0], targetShape.objectShape[1]);
-            case direction.East:
-                return new Vector2(targetShape.objectShape[1], targetShape.objectShape[2]);
-            case direction.South:
-                return new Vector2(targetShape.objectShape[3], targetShape.objectShape[2]);
-            default:
-                throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+            switch (dir)
+            {
+                case direction.West:
+                    return new Vector2(targetShape.objectShape[0], targetShape.objectShape[3]);
+                case direction.North:
+                    return new Vector2(targetShape.objectShape[0], targetShape.objectShape[1]);
+                case direction.East:
+                    return new Vector2(targetShape.objectShape[1], targetShape.objectShape[2]);
+                case direction.South:
+                    return new Vector2(targetShape.objectShape[3], targetShape.objectShape[2]);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+            }
+        }
+        else
+        {
+            switch (dir)
+            {
+                case direction.West:
+                    return new Vector3(targetShape.objectShape[0], targetShape.objectShape[3], targetShape.objectShape[6]);
+                case direction.North:
+                    return new Vector3(targetShape.objectShape[0], targetShape.objectShape[1],targetShape.objectShape[2]);
+                case direction.East:
+                    return new Vector3(targetShape.objectShape[2], targetShape.objectShape[5], targetShape.objectShape[8]);
+                case direction.South:
+                    return new Vector3(targetShape.objectShape[6], targetShape.objectShape[7], targetShape.objectShape[8]);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+            }
         }
     }
 }
